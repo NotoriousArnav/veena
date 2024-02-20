@@ -100,20 +100,17 @@ main > * {
   padding: 1rem;
 }
 
-main > div#sidebar {
-  width: 15%;
+strong#squery {
+  padding: 4rem;
+  margin: 4rem;
 }
 
 main > div#ui {
-  width: 55%;
+  width: 67%;
 }
 
 main > div#player {
-  width: 30%;
-}
-
-main > div#player > span {
-  widtsh: 100%;
+  width: 28%;
 }
 
 .logo {
