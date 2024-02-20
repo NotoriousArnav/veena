@@ -10,8 +10,35 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.7/axios.min.js" integrity="sha512-NQfB/bDaB8kaSXF8E77JjhHG5PM6XVRxvHzkZiwl3ddWCEPBa23T76MuWSwAJdMGJnmQqM0VeY9kFszsrBEFrQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .spinner {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: 9px solid;
+      border-color: #dbdcef;
+      border-right-color: #242424;
+      animation: spinner-d3wgkg 1s infinite linear;
+    }
+
+    @keyframes spinner-d3wgkg {
+      to {
+        transform: rotate(1turn);
+      }
+    }
+    li {
+      list-style: none;
+      padding: 0.3rem;
+      backdrop-filter: brightness(80%);
+      border-radius: 8px;
+    }
+    li:hover {
+      backdrop-filter: brightness(90%);
+    }
+  </style>
   <script>
     var player;
+    let lyrics;
     function onYouTubeIframeAPIReady(id) {
       if (id) {
         vid = id
@@ -25,7 +52,7 @@
             width: '480',
             height: '480',
             videoId: vid,
-            playerVars: { 'autoplay': 1, 'playsinline': 0, 'controls': 0 },
+            playerVars: { 'playsinline': 0, 'controls': 0 },
             events: {
                 'onReady': onPlayerReady
             }
@@ -36,6 +63,22 @@
     function onPlayerReady(event) {
         // event.target.mute();
         event.target.playVideo();
+        // fetchNow();
+    }
+    async function fetchNow() {
+      playbackStatus = player.getVideoData()
+      title = playbackStatus.title
+      author = player.getVideoData().author
+      author = author.replace('- Topic', '')
+      console.log(playbackStatus)
+      console.log(`Fetching lyrics for ${title}-${author}`)
+      lyrics = await fetchLyrics(`${title} ${author}`)
+      console.log(lyrics)
+    }
+    async function fetchLyrics (query) {
+      q = query.replaceAll(' ', '+')
+      lyrics = (await axios.get(`https://ytmrelay-api.onrender.com/lrc/quick?query=${q}`)).data
+      return lyrics
     }
 </script>
 
@@ -46,10 +89,17 @@
     <strong>Veena</strong>
     
   </header>
-  <main x-data="{loading:false, squery: '', dt: null, id: '5qZQEq_C3vc' }" x-init="">
+  <main x-data="{ lyrics_show: false, loading:false, squery: '', search: [], id: '5qZQEq_C3vc' }" x-init="">
     <div id="ui">
       <div id="searchbox">
-        <input x-model="squery" @keyup="loading = !loading" type="text" placeholder="Press Ctrl+K for Search" />
+        <script>
+          async function searchSongs(query){
+            data = (await axios.get(`https://ytmrelay-api.onrender.com/search?query=${query.replaceAll(' ', '+')}&filter=songs`)).data;
+            console.log(data);
+            return data;
+          }
+        </script>
+        <input x-model="squery" @keyup="loading = !loading; search=searchSongs(squery)" type="text" placeholder="Press Ctrl+K for Search" />
         <button>
           <svg viewBox="0 0 1024 1024">
             <path class="path1"
@@ -59,35 +109,38 @@
         </button>
         <br>
       </div>
-      <ul>
-        <strong id="squery" x-text="squery? 'Results for \''+squery+'\'' : 'Your Search Results will Appear here'"></strong>
-        <div x-show="loading" class="spinner"></div>
+      <script>
+        function changeVideo(id) {
+          player.cueVideoById({ videoId: id})
+          player.pauseVideo()
+        }
+      </script>
+      <strong id="squery" x-text="(squery & search)? 'Results for \''+squery+'\'' : 'Your Search Results will Appear here'"></strong>
+      <ul style="display: grid; grid-template-columns: 2fr 2fr 2fr;">
+        <!-- <div x-show="loading" class="spinner"></div> -->
 
-<style>
-.spinner {
-   width: 56px;
-   height: 56px;
-   border-radius: 50%;
-   border: 9px solid;
-   border-color: #dbdcef;
-   border-right-color: #242424;
-   animation: spinner-d3wgkg 1s infinite linear;
-}
+        <template x-for="song in search" :key="song.videoId">
+          <li @click="changeVideo(song.videoId)">
+            <img :src="song.thumbnails[1].url" width="32" height="32" alt="">
+            <a x-text="song.title"></a><br>
+            <a x-text="song.artists[0].name"></a>
+          </li>
+        </template>
 
-@keyframes spinner-d3wgkg {
-   to {
-      transform: rotate(1turn);
-   }
-}
-</style>
       </ul>
+    </div>
+    <div id="lyrics" x-show="lyrics_show">
+      <strong id="line">
+        
+      </strong>
     </div>
     <div id="ply">
       <div id="player">
       </div>
+      <br>
+      <button @click="fetchNow(); lyrics_show=!lyrics_show"><span x-text="lyrics_show ? 'Hide' : 'Show'"></span> Lyrics</button>
     </div>
   </main>
-  <!-- <script type="module" src="/main.js"></script> -->
 </body>
 
 </html>
