@@ -16,6 +16,6 @@
     "alpinejs": "^3.13.5",
     "amplitudejs": "^5.3.2",
     "axios": "^1.6.7",
-    "ytdlp-nodejs": "^0.1.4"
+    "ytdl-core-browser": "^1.0.0"
   }
 }
