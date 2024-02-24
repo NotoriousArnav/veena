@@ -1,0 +1,31 @@
+{
+  "name": "veena",
+  "version": "1.0.0",
+  "description": "No BS Music app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NotoriousArnav/veena.git"
+  },
+  "keywords": [
+    "Music",
+    "youtube",
+    "Youtube",
+    "music",
+    "Music",
+    "Lyrics",
+    "clear"
+  ],
+  "author": "Arnav Ghosh",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/NotoriousArnav/veena/issues"
+  },
+  "homepage": "https://github.com/NotoriousArnav/veena#readme",
+  "dependencies": {
+    "ytdl-core": "^4.11.5"
+  }
+}
