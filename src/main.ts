@@ -9,11 +9,9 @@ Alpine.start()
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 <div class="p-2">
-    Player
-    <!--Use X Component to Import Player Template-->
+    <x-component url="./src/player.html"></x-component>
 </div>
 <div class="p-2">
-    Lyrics
-    <!--Use X Component to Import Lyrics Template-->
+    <x-component url="./src/lyrics.html"></x-component>
 </div>
 `
