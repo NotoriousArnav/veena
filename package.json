@@ -1,31 +1,21 @@
 {
   "name": "veena",
-  "version": "1.0.0",
-  "description": "No BS Music app",
-  "main": "index.js",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/NotoriousArnav/veena.git"
+  "devDependencies": {
+    "autoprefixer": "^10.4.17",
+    "postcss": "^8.4.35",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5.2.2",
+    "vite": "^5.1.4"
   },
-  "keywords": [
-    "Music",
-    "youtube",
-    "Youtube",
-    "music",
-    "Music",
-    "Lyrics",
-    "clear"
-  ],
-  "author": "Arnav Ghosh",
-  "license": "GPL-3.0",
-  "bugs": {
-    "url": "https://github.com/NotoriousArnav/veena/issues"
-  },
-  "homepage": "https://github.com/NotoriousArnav/veena#readme",
   "dependencies": {
-    "ytdl-core": "^4.11.5"
+    "alpinejs": "^3.13.5"
   }
 }
