@@ -4,10 +4,28 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + TS</title>
+    <script type="module" src="./src/main.ts" defer></script>
+    <link rel="stylesheet" href="./src/tailwind.css">
+    <title>Veena</title>
   </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
+  <body class="dark p-2">
+    <header class="p-2 justify-start">
+      <nav class="p-2 border-2 rounded-lg place-content-around flex items-center backdrop-blur-md backdrop-brightness-90">
+        <strong class="text-3xl">Veena</strong>
+        <ul class="flex gap-4">
+          <li>GitHub</li>
+          <li>Author</li>
+          <li>Contributors</li>
+        </ul>
+        <div id="search" class="rounded-lg flex transition-all border-2">
+          <input type="text" name="search" class="p-2 border-t-2 border-b-2 border-l-2" id="search_inp" placeholder="Ctrl+K to Search">
+          <button class="bg-slate-200 text-black p-2 hover:bg-slate-300">Search</button>
+        </div>
+      </nav>
+    </header>
+    <div id="app" class="grid grid-cols-2 text-center items-center divide-x gap-4 w-full border-2 p-4 rounded-lg backdrop-blur-md backdrop-brightness-90">
+      Please Enable Javascript to View this Page.
+      This Page uses AlpineJS to render content and make it interactive
+    </div>
   </body>
 </html>
